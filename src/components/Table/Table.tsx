@@ -3,11 +3,15 @@ import './Table.css'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
 
-export default function Table({ data}) {
-    // gas price: bundle?.gas_used / (10 ** 9)
-
-    let dataToDisplay = data.map((block,i) => {
-        let hasMegaBundle = block.transactions.some(tx=>{return tx.is_megabundle})
+export default function Table({ data }) {
+    let dataToDisplay = data.map((block, i) => {
+        let hasMegaBundle = block.transactions.some(tx => { return tx.is_megabundle })
+        let numRougeBundles = block.transactions.reduce((tot, tx) => {
+            if (tx.bundle_type === 'rogue') {
+                return tot + 1
+            }
+            return tot
+        }, 0)
         return (
             <tr key={i}>
                 <td>
@@ -21,7 +25,7 @@ export default function Table({ data}) {
                 <td>{Math.round(block.miner_reward / block.gas_used / (10 ** 9))}
                     <span> gwei</span>
                 </td>
-                <td className={hasMegaBundle?'hasMegaBundle':''}>{hasMegaBundle?'✓':'x'}</td>
+                <td className={hasMegaBundle ? 'hasMegaBundle' : ''}>{hasMegaBundle ? '✓' : 'x'}</td>
                 <td>{block.transactions.length}</td>
             </tr>
         )
@@ -38,9 +42,9 @@ export default function Table({ data}) {
                             <th>Gas Used</th>
                             <th>Gas Price</th>
                             <th className='megabundle'>
-                                <div>Contains</div> 
+                                <div>Contains</div>
                                 <div><span>MegaBundle?</span></div>
-                                </th>
+                            </th>
                             <th>Bundles</th>
                         </tr>
                     </thead>
