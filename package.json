@@ -1,6 +1,6 @@
 {
-  "name": "atlas",
-  "homepage": "https://henreth.github.io/atlas",
+  "name": "flashboard",
+  "homepage": "https://henreth.github.io/flashboard",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
