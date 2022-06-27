@@ -20,9 +20,8 @@
      display: flex;
      justify-content: center;
      align-content: center;
-     // background-color: rgb(225, 220, 211);
      background-color: white;
-     width: 79vw;
+     width: 77.5vw;
      border-radius: 2.5px;
      box-shadow: 0px 35px 50px rgba(0, 0, 0, 0.2);
      margin: 30px 70px 20px;
@@ -38,6 +37,7 @@
  }
 
  .footer {
+     margin-top: 45px;
      transition: .15s;
 
      a {
@@ -88,12 +88,7 @@
      display: flex;
      justify-content: center;
      align-content: center;
-     // background-color: rgb(225, 220, 211);
-     // background-color: white;
      width: 50.5vw;
-     // padding-bottom: 1vh;
-     margin-bottom: 30px;
-
  }
 
 
@@ -132,9 +127,10 @@
          font-weight: bolder;
          font-size: larger;
          transition: 0.25s;
-        &:hover{
-         color: white;
-        }
+
+         &:hover {
+             color: white;
+         }
      }
 
      &:hover {
@@ -146,7 +142,7 @@
      }
 
      &:active {
-        color: #1a8870;
-        transition: 0s;
+         color: #1a8870;
+         transition: 0s;
      }
  }
