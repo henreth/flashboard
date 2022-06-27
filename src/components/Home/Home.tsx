@@ -1,7 +1,7 @@
 // @ts-ignore
 import Graph from '../Graph/Graph.tsx';
 // @ts-ignore
-import Table from '../Table/Table.tsx'; 
+import Table from '../Table/Table.tsx';
 import React, { useState } from 'react'
 import './Home.css';
 import Slider from 'rc-slider';
@@ -25,9 +25,9 @@ export default function Home({ testData }) {
     else setPageNum(pageNum + 1)
   }
 
-  let [leftBound,setLeftBound] = useState(0)
-  let [rightBound,setRightBound] = useState(10) 
-  let graphData= testData.slice(leftBound,rightBound)
+  let [leftBound, setLeftBound] = useState(0)
+  let [rightBound, setRightBound] = useState(10)
+  let graphData = testData.slice(leftBound, rightBound)
 
   let labels = graphData.map(block => block.block_number)
   let blockrewards = graphData.map(block => (block.miner_reward / (10 ** 18)).toFixed(4))
@@ -79,9 +79,11 @@ export default function Home({ testData }) {
       <div className='subtitle'>all data provided by the <a href='https://blocks.flashbots.net/'>flashbots mev-blocks api</a></div>
       <div className='options'>
         {/* tabs to select Table or table with information */}
-        <div>View Data as:</div>
-        <div>Graph</div>
-        <div>Table</div>
+        <div className='tab-container'>
+          <div>View Data As:</div>
+          <div className='tab'>Graph</div>
+          <div className='tab'>Table</div>
+        </div>
       </div>
       {displayTable}
       <div className='results-message'>
@@ -95,11 +97,11 @@ export default function Home({ testData }) {
         {displayGraph}
       </div>
       <div className='slider-container'>
-        <div>Range: {leftBound+1}:{rightBound}</div>
-        <Slider range dots pushable allowCross={false} step={5} defaultValue={[0, 15]} onChange={onSliderChange} 
-                trackStyle={[{ backgroundColor: '#1a8870' }]}
-                handleStyle={[{ backgroundColor: '#92e0d0' },{ backgroundColor: '#92e0d0' }]}
-                />
+        <div>Range: {leftBound + 1}:{rightBound}</div>
+        <Slider range dots pushable allowCross={false} step={5} defaultValue={[0, 15]} onChange={onSliderChange}
+          trackStyle={[{ backgroundColor: '#1a8870' }]}
+          handleStyle={[{ backgroundColor: '#92e0d0' }, { backgroundColor: '#92e0d0' }]}
+        />
       </div>
       <div className='footer'>
         <a href='https://github.com/henreth/flashboard'>developed by: </a>

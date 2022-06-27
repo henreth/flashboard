@@ -130,4 +130,29 @@
   width: 50.5vw;
   margin-bottom: 30px;
 }
+
+.options {
+  width: 85%;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  text-align: center;
+}
+
+.tab-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+.tab {
+  margin: 0% .75%;
+}
 /*# sourceMappingURL=Home.css.map */
