@@ -150,9 +150,59 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: row;
           flex-direction: row;
+  text-align: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.view-title {
+  margin: 0% 0.75% 0% 0%;
+  color: #d7d7d7;
+  font-weight: bolder;
+  font-size: larger;
+  cursor: default;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
 .tab {
-  margin: 0% .75%;
+  margin: 0% 0.75%;
+  -webkit-transition: 0.25s;
+  transition: 0.25s;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  color: #afafaf;
+}
+
+.tab.selected {
+  color: white;
+  font-weight: bolder;
+  font-size: larger;
+  -webkit-transition: 0.25s;
+  transition: 0.25s;
+}
+
+.tab.selected:hover {
+  color: white;
+}
+
+.tab:hover {
+  cursor: pointer;
+  color: #92e0d0;
+  font-weight: bolder;
+  -webkit-transition: 0.25s;
+  transition: 0.25s;
+  font-size: larger;
+}
+
+.tab:active {
+  color: #1a8870;
+  -webkit-transition: 0s;
+  transition: 0s;
 }
 /*# sourceMappingURL=Home.css.map */

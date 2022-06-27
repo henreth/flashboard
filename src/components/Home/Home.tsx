@@ -14,6 +14,9 @@ export default function Home({ testData }) {
   const viewGraph = () => setViewOption('graph')
   const viewTable = () => setViewOption('table')
 
+  let graphViewClass = viewOption === 'graph' ? 'tab selected' : 'tab'
+  let tableViewClass = viewOption === 'table' ? 'tab selected' : 'tab'
+
   //used in table:
   let [pageNum, setPageNum] = useState(1)
   let right = pageNum * 15
@@ -86,9 +89,9 @@ export default function Home({ testData }) {
       <div className='options'>
         {/* tabs to select Table or table with information */}
         <div className='tab-container'>
-          <div>View:</div>
-          <div className='tab' onClick={viewGraph} >Graph</div>
-          <div className='tab' onClick={viewTable} >Table</div>
+          <div className='view-title'>View:</div>
+          <div className={graphViewClass} onClick={viewGraph} >Graph</div>
+          <div className={tableViewClass} onClick={viewTable} >Table</div>
         </div>
       </div>
       {displayTable}
