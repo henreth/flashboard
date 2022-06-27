@@ -98,7 +98,7 @@ export default function Home({ testData }) {
                 />
       </div>
       <div className='footer'>
-        <a href='https://github.com/henreth/atlas'>developed by: </a>
+        <a href='https://github.com/henreth/flashboard'>developed by: </a>
         <span>
           <a href='https://github.com/henreth'>@henreth</a>
         </span>
