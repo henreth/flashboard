@@ -9,7 +9,7 @@ import 'rc-slider/assets/index.css';
 
 
 export default function Home({ testData }) {
-  let [viewOption,setViewOption] = useState('table')
+  let [viewOption, setViewOption] = useState('table')
 
   const viewGraph = () => setViewOption('graph')
   const viewTable = () => setViewOption('table')
@@ -74,13 +74,38 @@ export default function Home({ testData }) {
   };
   //
 
-  let displayGraph = testData ? <Graph options={options} data={data} /> : null
-  let displayTable = testData ? <Table data={blockData} pageNum={pageNum} setPageNum={setPageNum} left={left} right={right} /> : null
+  let graphElement = testData ? <Graph options={options} data={data} /> : null
+  let tableElement = testData ? <Table data={blockData} pageNum={pageNum} setPageNum={setPageNum} left={left} right={right} /> : null
 
   function onSliderChange(value) {
     setLeftBound(Math.min(...value))
     setRightBound(Math.max(...value))
   }
+
+  const displayTable = viewOption === 'table' ? <React.Fragment>
+    {tableElement}
+    <div className='results-message'>
+      <div>Currently viewing results {left < 100 ? left + 1 : 91} to {right < 100 ? right : 100} of the last {testData.length} blocks</div>
+      <div className='results-control'>
+        <button onClick={clickLeft} disabled={pageNum === 1}>{'<'}</button>
+        <button onClick={clickRight} disabled={pageNum === 7}>{'>'}</button>
+      </div>
+    </div>
+  </React.Fragment>
+    : null
+
+  const displayGraph = viewOption === 'graph' ? <React.Fragment>
+      <div className="graph-container">
+        {graphElement}
+      </div>
+      <div className='slider-container'>
+        <div>Range: {leftBound + 1}:{rightBound}</div>
+        <Slider range dots pushable allowCross={false} step={5} defaultValue={[0, 15]} onChange={onSliderChange}
+          trackStyle={[{ backgroundColor: '#1a8870' }]}
+          handleStyle={[{ backgroundColor: '#92e0d0' }, { backgroundColor: '#92e0d0' }]}
+        />
+      </div>
+  </React.Fragment> : null
 
   return (
     <div className='home-container'>
@@ -90,28 +115,15 @@ export default function Home({ testData }) {
         {/* tabs to select Table or table with information */}
         <div className='tab-container'>
           <div className='view-title'>View:</div>
-          <div className={graphViewClass} onClick={viewGraph} >Graph</div>
-          <div className={tableViewClass} onClick={viewTable} >Table</div>
+          <div className={tableViewClass} onClick={viewTable}>Table</div>
+          <div className={graphViewClass} onClick={viewGraph}>Graph</div>
         </div>
       </div>
+
       {displayTable}
-      <div className='results-message'>
-        <div>Currently viewing results {left < 100 ? left + 1 : 91} to {right < 100 ? right : 100} of the last {testData.length} blocks</div>
-        <div className='results-control'>
-          <button onClick={clickLeft} disabled={pageNum === 1}>{'<'}</button>
-          <button onClick={clickRight} disabled={pageNum === 7}>{'>'}</button>
-        </div>
-      </div>
-      <div className="graph-container">
-        {displayGraph}
-      </div>
-      <div className='slider-container'>
-        <div>Range: {leftBound + 1}:{rightBound}</div>
-        <Slider range dots pushable allowCross={false} step={5} defaultValue={[0, 15]} onChange={onSliderChange}
-          trackStyle={[{ backgroundColor: '#1a8870' }]}
-          handleStyle={[{ backgroundColor: '#92e0d0' }, { backgroundColor: '#92e0d0' }]}
-        />
-      </div>
+      {displayGraph }
+
+
       <div className='footer'>
         <a href='https://github.com/henreth/flashboard'>developed by: </a>
         <span>
