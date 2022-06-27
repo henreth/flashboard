@@ -1,95 +1,148 @@
- .home-container{
+ .home-container {
      display: flex;
      flex-direction: column;
-    justify-content: center;
-    align-content: center;
-    align-items: center;
-    margin-top: 1vh;
-}
+     justify-content: center;
+     align-content: center;
+     align-items: center;
+     margin-top: 1vh;
+ }
 
-.home-title{
-    align-self: center;
-    font-size: 5vh;
-    font-weight: bold;
-    color: floralwhite;
-    font-family: 'Questrial', sans-serif;
-    text-transform: uppercase;
-}
+ .home-title {
+     align-self: center;
+     font-size: 5vh;
+     font-weight: bold;
+     color: floralwhite;
+     font-family: 'Questrial', sans-serif;
+     text-transform: uppercase;
+ }
 
-.graph-container{
-    display: flex;
-    justify-content: center;
-    align-content: center;
-    // background-color: rgb(225, 220, 211);
-    background-color: white;
-    width: 79vw;
-    border-radius: 2.5px;
-    box-shadow: 0px 35px 50px rgba(0, 0, 0, 0.2);
-    margin: 30px 70px 20px;
+ .graph-container {
+     display: flex;
+     justify-content: center;
+     align-content: center;
+     background-color: white;
+     width: 77.5vw;
+     border-radius: 2.5px;
+     box-shadow: 0px 35px 50px rgba(0, 0, 0, 0.2);
+     margin: 30px 70px 20px;
 
-}
+ }
 
-.results-message{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    align-content: center;
-}
+ .results-message {
+     display: flex;
+     flex-direction: column;
+     justify-content: center;
+     align-items: center;
+     align-content: center;
+ }
 
-.footer{
-    transition: .15s;
+ .footer {
+     margin-top: 45px;
+     transition: .15s;
 
-    a {
-        text-decoration: none;
-        color: floralwhite;
-        transition: .15s;
+     a {
+         text-decoration: none;
+         color: floralwhite;
+         transition: .15s;
 
-        &:hover{
-            color: #92e0d0;
-            transition: .15s;
-        }
-        &:active{
-            color: #1a8870;
-            transition: .15s;
-        }
-    }
+         &:hover {
+             color: #92e0d0;
+             transition: .15s;
+         }
 
-    span {
-        font-weight: bold;
-    }
-}
+         &:active {
+             color: #1a8870;
+             transition: .15s;
+         }
+     }
 
-.subtitle{
-    margin-bottom: 2vh;
-    transition: .15s;
-    font-size: 90%;
+     span {
+         font-weight: bold;
+     }
+ }
 
-    a {
-        text-decoration: none;
-        font-weight: bold;
-        color: floralwhite;
-        transition: .15s;
+ .subtitle {
+     margin-bottom: 2vh;
+     transition: .15s;
+     font-size: 90%;
 
-        &:hover{
-            color: #92e0d0;
-            transition: .15s;
-        }
-        &:active{
-            color: #1a8870;
-            transition: .15s;
-        }
-    }
-}
+     a {
+         text-decoration: none;
+         font-weight: bold;
+         color: floralwhite;
+         transition: .15s;
 
-.slider-container{
-    display: flex;
-    justify-content: center;
-    align-content: center;
-    // background-color: rgb(225, 220, 211);
-    // background-color: white;
-    width: 50.5vw;
-    // padding-bottom: 1vh;
-    margin-bottom: 30px;
+         &:hover {
+             color: #92e0d0;
+             transition: .15s;
+         }
 
-}
+         &:active {
+             color: #1a8870;
+             transition: .15s;
+         }
+     }
+ }
+
+ .slider-container {
+     display: flex;
+     justify-content: center;
+     align-content: center;
+     width: 50.5vw;
+ }
+
+
+ .options {
+     width: 85%;
+     justify-content: center;
+     align-items: center;
+     text-align: center;
+ }
+
+ .tab-container {
+     display: flex;
+     flex-direction: row;
+     text-align: center;
+     align-items: center;
+
+ }
+
+ .view-title {
+     margin: 0% 0.75% 0% 0%;
+     color: rgb(215, 215, 215);
+     font-weight: bolder;
+     font-size: larger;
+     cursor: default;
+     user-select: none;
+ }
+
+ .tab {
+     margin: 0% 0.75%;
+     transition: 0.25s;
+     user-select: none;
+     color: rgb(175, 175, 175);
+
+     &.selected {
+         color: white;
+         font-weight: bolder;
+         font-size: larger;
+         transition: 0.25s;
+
+         &:hover {
+             color: white;
+         }
+     }
+
+     &:hover {
+         cursor: pointer;
+         color: #92e0d0;
+         font-weight: bolder;
+         transition: 0.25s;
+         font-size: larger;
+     }
+
+     &:active {
+         color: #1a8870;
+         transition: 0s;
+     }
+ }
