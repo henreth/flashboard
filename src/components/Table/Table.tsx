@@ -6,12 +6,26 @@ import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
 export default function Table({ data }) {
     let dataToDisplay = data.map((block, i) => {
         let hasMegaBundle = block.transactions.some(tx => { return tx.is_megabundle })
-        let numRougeBundles = block.transactions.reduce((tot, tx) => {
-            if (tx.bundle_type === 'rogue') {
+
+        let numNonRougeBundles = block.transactions.reduce((tot, tx) => {
+            if (tx.bundle_type !== 'rogue') {
                 return tot + 1
             }
             return tot
         }, 0)
+
+        let nonRogueReward = block.transactions.reduce((tot,tx) => {
+            if (tx.bundle_type !== 'rogue')return tot + parseInt(tx.total_miner_reward)
+            return tot
+        },0)
+
+        let nonRogueGasUsed = block.transactions.reduce((tot,tx) => {
+            if (tx.bundle_type !== 'rogue')return tot + parseInt(tx.gas_used)
+            return tot
+        },0)
+
+        let nonRogueGasPrice = Math.round(nonRogueReward / nonRogueGasUsed / (10 ** 9))
+
         return (
             <tr key={i}>
                 <td>
@@ -27,6 +41,8 @@ export default function Table({ data }) {
                 </td>
                 <td className={hasMegaBundle ? 'hasMegaBundle' : ''}>{hasMegaBundle ? '✓' : 'x'}</td>
                 <td>{block.transactions.length}</td>
+                {/* <td>{numNonRougeBundles}</td>
+                <td>{(nonRogueReward / (10 ** 18)).toFixed(4)}</td> */}
             </tr>
         )
     })
