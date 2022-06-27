@@ -1,6 +1,9 @@
-# Flashboard
+# <img src="flashboard-title.png" width="600">
 
-a web application that visualizes data from the latest 100 Flashbots blocks.
+A web application that utilizes the Flashbots mev-blocks api to visualize block and transaction data from the latest 100 Flashbots blocks.
+
+* all data provided from  <a href='https://blocks.flashbots.net/'>here</a>
+
 
 **Try it out here:** [FLASHBOARD](https://henreth.github.io/flashboard/)
 
@@ -12,13 +15,14 @@ a web application that visualizes data from the latest 100 Flashbots blocks.
 
 # Demos:
 
+<img src="flashboard-demo.gif" width="850">
 
 #
 ## Technicals:
 
 **Made With:** 
 
-<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg" alt="javascript" width="40" height="40"/> </a> 
+<a href="https://www.typescriptlang.org/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/typescript/typescript-original.svg" alt="typescript" width="40" height="40"/> </a> 
 <a href="https://reactjs.org/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original-wordmark.svg" alt="react" width="40" height="40"/> </a> 
 
 
@@ -29,7 +33,7 @@ a web application that visualizes data from the latest 100 Flashbots blocks.
 * Run the following commands in two seperate terminals:
 
 ```
-// install start the frontend interface
+// install and start the frontend interface
 npm install --prefix client
 npm start --prefix client 
 ```
