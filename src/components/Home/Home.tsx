@@ -1,6 +1,8 @@
-import React, { useState } from 'react'
+// @ts-ignore
 import Graph from '../Graph/Graph.tsx';
-import Table from '../Table/Table.tsx';
+// @ts-ignore
+import Table from '../Table/Table.tsx'; 
+import React, { useState } from 'react'
 import './Home.css';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
@@ -77,6 +79,9 @@ export default function Home({ testData }) {
       <div className='subtitle'>all data provided by the <a href='https://blocks.flashbots.net/'>flashbots mev-blocks api</a></div>
       <div className='options'>
         {/* tabs to select Table or table with information */}
+        <div>View Data as:</div>
+        <div>Graph</div>
+        <div>Table</div>
       </div>
       {displayTable}
       <div className='results-message'>
@@ -94,7 +99,6 @@ export default function Home({ testData }) {
         <Slider range dots pushable allowCross={false} step={5} defaultValue={[0, 15]} onChange={onSliderChange} 
                 trackStyle={[{ backgroundColor: '#1a8870' }]}
                 handleStyle={[{ backgroundColor: '#92e0d0' },{ backgroundColor: '#92e0d0' }]}
-                // railStyle={{ backgroundColor: 'black' }}
                 />
       </div>
       <div className='footer'>
