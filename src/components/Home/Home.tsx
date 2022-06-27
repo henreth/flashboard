@@ -9,6 +9,12 @@ import 'rc-slider/assets/index.css';
 
 
 export default function Home({ testData }) {
+  let [viewOption,setViewOption] = useState('table')
+
+  const viewGraph = () => setViewOption('graph')
+  const viewTable = () => setViewOption('table')
+
+  //used in table:
   let [pageNum, setPageNum] = useState(1)
   let right = pageNum * 15
   let left = right - 15
@@ -25,6 +31,7 @@ export default function Home({ testData }) {
     else setPageNum(pageNum + 1)
   }
 
+  //used in graph:
   let [leftBound, setLeftBound] = useState(0)
   let [rightBound, setRightBound] = useState(10)
   let graphData = testData.slice(leftBound, rightBound)
@@ -62,11 +69,10 @@ export default function Home({ testData }) {
     ],
 
   };
+  //
 
   let displayGraph = testData ? <Graph options={options} data={data} /> : null
   let displayTable = testData ? <Table data={blockData} pageNum={pageNum} setPageNum={setPageNum} left={left} right={right} /> : null
-
-
 
   function onSliderChange(value) {
     setLeftBound(Math.min(...value))
@@ -80,9 +86,9 @@ export default function Home({ testData }) {
       <div className='options'>
         {/* tabs to select Table or table with information */}
         <div className='tab-container'>
-          <div>View Data As:</div>
-          <div className='tab'>Graph</div>
-          <div className='tab'>Table</div>
+          <div>View:</div>
+          <div className='tab' onClick={viewGraph} >Graph</div>
+          <div className='tab' onClick={viewTable} >Table</div>
         </div>
       </div>
       {displayTable}
