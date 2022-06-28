@@ -49,9 +49,37 @@ export default function Home({ testData }) {
   let graphData = testData.slice(leftBound, rightBound)
 
   let labels = graphData.map(block => block.block_number)
-  let blockrewards = graphData.map(block => (block.miner_reward / (10 ** 18)).toFixed(4))
-  let gasfees = graphData.map(block => block.miner_reward / block.gas_used / (10 ** 9))
-  let numBundles = graphData.map(block => block.transactions.length)
+
+  let nonRogueBlockrewards = graphData.map(block => {
+    let nonRogueReward = block.transactions.reduce((tot, tx) => {
+      if (tx.bundle_type !== 'rogue') return tot + parseInt(tx.total_miner_reward)
+      return tot
+    }, 0)
+
+    return (nonRogueReward / (10 ** 18)).toFixed(4)
+  })
+  let nonRogueGasfees = graphData.map(block => {
+    let nonRogueReward = block.transactions.reduce((tot, tx) => {
+      if (tx.bundle_type !== 'rogue') return tot + parseInt(tx.total_miner_reward)
+      return tot
+    }, 0)
+
+    let nonRogueGasUsed = block.transactions.reduce((tot, tx) => {
+      if (tx.bundle_type !== 'rogue') return tot + parseInt(tx.gas_used)
+      return tot
+    }, 0)
+
+    return Math.round(nonRogueReward / nonRogueGasUsed / (10 ** 9))
+  })
+  let nonRogueNumBundles = graphData.map(block => block.transactions.filter(tx => tx.bundle_type !== 'rogue').length)
+
+  let inclusiveBlockrewards = graphData.map(block => (block.miner_reward / (10 ** 18)).toFixed(4))
+  let inclusiveGasfees = graphData.map(block => block.miner_reward / block.gas_used / (10 ** 9))
+  let inclusiveNumBundles = graphData.map(block => block.transactions.length)
+
+  let blockrewards = filterRogue ? nonRogueBlockrewards : inclusiveBlockrewards
+  let gasfees = filterRogue ? nonRogueGasfees : inclusiveGasfees
+  let numBundles = filterRogue ? nonRogueNumBundles : inclusiveNumBundles
 
   const options = {
     responsive: true,
@@ -83,8 +111,8 @@ export default function Home({ testData }) {
   };
   //
 
-  let tableElement = testData ? <Table data={blockData} pageNum={pageNum} setPageNum={setPageNum} left={left} right={right} filterRogue={filterRogue}/> : null
-  
+  let tableElement = testData ? <Table data={blockData} pageNum={pageNum} setPageNum={setPageNum} left={left} right={right} filterRogue={filterRogue} /> : null
+
   const displayTable = viewOption === 'table' ? <React.Fragment>
     {tableElement}
     <div className='results-message'>
