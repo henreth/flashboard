@@ -20,11 +20,11 @@ export default function Home({ testData }) {
   // filter rogue bundles:
   let [filterRogue, setFilterRogue] = useState(false)
 
-  const filterYes = () => setFilterRogue(true)
-  const filterNo = () => setFilterRogue(false)
+  const filterNo = () => setFilterRogue(true)
+  const filterYes = () => setFilterRogue(false)
 
-  let filterYesClass = filterRogue ? 'tab selected' : 'tab'
-  let filterNoClass = filterRogue ? 'tab' : 'tab selected'
+  let filterNoClass = filterRogue ? 'tab selected' : 'tab'
+  let filterYesClass = filterRogue ? 'tab' : 'tab selected'
 
   //used in table:
   let [pageNum, setPageNum] = useState(1)
@@ -154,13 +154,13 @@ export default function Home({ testData }) {
         {/* tabs to select Table or table with information */}
         <div className='tab-container'>
           <div className='view-title'>View:</div>
-          <div className={tableViewClass} onClick={viewTable}>Table</div>
+          <div className={tableViewClass} onClick={viewTable}>Table</div> //
           <div className={graphViewClass} onClick={viewGraph}>Graph</div>
         </div>
         <div className='tab-container'>
-          <div className='filter-title'>Filter Rogue Bundles: </div>
-          <div className={filterYesClass} onClick={filterYes}>On</div>
-          <div className={filterNoClass} onClick={filterNo}>Off</div>
+          <div className='filter-title'>Include Rogue Bundles: </div>
+          <div className={filterYesClass} onClick={filterYes}>Yes</div> // 
+          <div className={filterNoClass} onClick={filterNo}>No</div>
         </div>
       </div>
 
