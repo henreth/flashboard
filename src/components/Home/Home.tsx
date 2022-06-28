@@ -130,9 +130,9 @@ export default function Home({ testData }) {
           <div className={graphViewClass} onClick={viewGraph}>Graph</div>
         </div>
         <div className='tab-container'>
-          <div className='filter-title'>Include Rogue Bundles:</div>
-          <div className={filterYesClass} onClick={filterYes}>Yes</div>
-          <div className={filterNoClass} onClick={filterNo}>No</div>
+          <div className='filter-title'>Filter Rogue Bundles: </div>
+          <div className={filterYesClass} onClick={filterYes}>On</div>
+          <div className={filterNoClass} onClick={filterNo}>Off</div>
         </div>
       </div>
 

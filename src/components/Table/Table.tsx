@@ -5,11 +5,9 @@ import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
 
 export default function Table({ data,filterRogue }) {
     let dataToDisplay = data.map((block, i) => {
-        let hasMegaBundle = block.transactions.some(tx => { return tx.is_megabundle })
-
         let nonRogueBundles = block.transactions.filter(tx=>tx.bundle_type!=='rogue')
 
-        let numNonRougeBundles = block.transactions.reduce((tot, tx) => {
+        let NonRougeNumBundles = block.transactions.reduce((tot, tx) => {
             if (tx.bundle_type !== 'rogue') {
                 return tot + 1
             }
@@ -21,6 +19,8 @@ export default function Table({ data,filterRogue }) {
             return tot
         },0)
 
+        let nonRougeMinerReward = (nonRogueReward / (10 ** 18)).toFixed(4)
+
         let nonRogueGasUsed = block.transactions.reduce((tot,tx) => {
             if (tx.bundle_type !== 'rogue')return tot + parseInt(tx.gas_used)
             return tot
@@ -28,7 +28,26 @@ export default function Table({ data,filterRogue }) {
 
         let nonRogueGasPrice = Math.round(nonRogueReward / nonRogueGasUsed / (10 ** 9))
 
-        const minerReward = filterRogue ? nonRogueReward : (block.miner_reward / (10 ** 18)).toFixed(4)
+        const nonRogueHasMegaBundle = block.transactions.filter(tx=>tx.bundle_type!=='rogue').some(tx => { return tx.is_megabundle })
+
+
+        //all (including rogue)
+        const inclusiveMinerReward = (block.miner_reward / (10 ** 18)).toFixed(4)
+        const inclusiveGasUsed = block.gas_used
+        const inclusiveGasPrice = Math.round(block.miner_reward / block.gas_used / (10 ** 9))
+        const inclusiveNumBundles = block.transactions.length
+        const inclusiveHasMegaBundle = block.transactions.some(tx => { return tx.is_megabundle })
+
+        // Table Data
+        const minerReward = filterRogue ? nonRougeMinerReward : inclusiveMinerReward
+        const gasUsed = filterRogue ? nonRogueGasUsed : inclusiveGasUsed
+        const gasPrice = filterRogue ? nonRogueGasPrice : inclusiveGasPrice
+        const hasMegaBundle = filterRogue ? nonRogueHasMegaBundle : inclusiveHasMegaBundle
+        const numBundles = filterRogue ? NonRougeNumBundles : inclusiveNumBundles
+
+        //
+        const displayMegaBundle = hasMegaBundle ? '✓' : 'x'
+        const megaBundleClass = hasMegaBundle ? 'hasMegaBundle' : ''
 
         return (
             <tr key={i}>
@@ -39,12 +58,12 @@ export default function Table({ data,filterRogue }) {
                     </a>
                 </td>
                 <td>Ξ {minerReward}</td>
-                <td>{block.gas_used}</td>
-                <td>{Math.round(block.miner_reward / block.gas_used / (10 ** 9))}
+                <td>{gasUsed}</td>
+                <td>{gasPrice}
                     <span> gwei</span>
                 </td>
-                <td className={hasMegaBundle ? 'hasMegaBundle' : ''}>{hasMegaBundle ? '✓' : 'x'}</td>
-                <td>{block.transactions.length}</td>
+                <td className={megaBundleClass}>{displayMegaBundle}</td>
+                <td>{numBundles}</td>
 
             </tr>
         )
