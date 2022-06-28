@@ -17,6 +17,15 @@ export default function Home({ testData }) {
   let graphViewClass = viewOption === 'graph' ? 'tab selected' : 'tab'
   let tableViewClass = viewOption === 'table' ? 'tab selected' : 'tab'
 
+  // filter rogue bundles:
+  let [filterRogue, setFilterRogue] = useState(false)
+
+  const filterYes = () => setFilterRogue(true)
+  const filterNo = () => setFilterRogue(false)
+
+  let filterYesClass = filterRogue ? 'tab selected' : 'tab'
+  let filterNoClass = filterRogue ? 'tab' : 'tab selected'
+
   //used in table:
   let [pageNum, setPageNum] = useState(1)
   let right = pageNum * 15
@@ -74,14 +83,8 @@ export default function Home({ testData }) {
   };
   //
 
-  let graphElement = testData ? <Graph options={options} data={data} /> : null
-  let tableElement = testData ? <Table data={blockData} pageNum={pageNum} setPageNum={setPageNum} left={left} right={right} /> : null
-
-  function onSliderChange(value) {
-    setLeftBound(Math.min(...value))
-    setRightBound(Math.max(...value))
-  }
-
+  let tableElement = testData ? <Table data={blockData} pageNum={pageNum} setPageNum={setPageNum} left={left} right={right} filterRogue={filterRogue}/> : null
+  
   const displayTable = viewOption === 'table' ? <React.Fragment>
     {tableElement}
     <div className='results-message'>
@@ -94,17 +97,25 @@ export default function Home({ testData }) {
   </React.Fragment>
     : null
 
+
+  let graphElement = testData ? <Graph options={options} data={data} /> : null
+
+  function onSliderChange(value) {
+    setLeftBound(Math.min(...value))
+    setRightBound(Math.max(...value))
+  }
+
   const displayGraph = viewOption === 'graph' ? <React.Fragment>
-      <div className="graph-container">
-        {graphElement}
-      </div>
-      <div className='slider-container'>
-        <div>Range: {leftBound + 1}:{rightBound}</div>
-        <Slider range dots pushable allowCross={false} step={5} defaultValue={[0, 15]} onChange={onSliderChange}
-          trackStyle={[{ backgroundColor: '#1a8870' }]}
-          handleStyle={[{ backgroundColor: '#92e0d0' }, { backgroundColor: '#92e0d0' }]}
-        />
-      </div>
+    <div className="graph-container">
+      {graphElement}
+    </div>
+    <div className='slider-container'>
+      <div>Range: {leftBound + 1}:{rightBound}</div>
+      <Slider range dots pushable allowCross={false} step={5} defaultValue={[0, 15]} onChange={onSliderChange}
+        trackStyle={[{ backgroundColor: '#1a8870' }]}
+        handleStyle={[{ backgroundColor: '#92e0d0' }, { backgroundColor: '#92e0d0' }]}
+      />
+    </div>
   </React.Fragment> : null
 
   return (
@@ -118,10 +129,15 @@ export default function Home({ testData }) {
           <div className={tableViewClass} onClick={viewTable}>Table</div>
           <div className={graphViewClass} onClick={viewGraph}>Graph</div>
         </div>
+        <div className='tab-container'>
+          <div className='filter-title'>Include Rogue Bundles:</div>
+          <div className={filterYesClass} onClick={filterYes}>Yes</div>
+          <div className={filterNoClass} onClick={filterNo}>No</div>
+        </div>
       </div>
 
       {displayTable}
-      {displayGraph }
+      {displayGraph}
 
 
       <div className='footer'>

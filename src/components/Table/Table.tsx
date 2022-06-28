@@ -3,9 +3,11 @@ import './Table.css'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
 
-export default function Table({ data }) {
+export default function Table({ data,filterRogue }) {
     let dataToDisplay = data.map((block, i) => {
         let hasMegaBundle = block.transactions.some(tx => { return tx.is_megabundle })
+
+        let nonRogueBundles = block.transactions.filter(tx=>tx.bundle_type!=='rogue')
 
         let numNonRougeBundles = block.transactions.reduce((tot, tx) => {
             if (tx.bundle_type !== 'rogue') {
@@ -26,6 +28,8 @@ export default function Table({ data }) {
 
         let nonRogueGasPrice = Math.round(nonRogueReward / nonRogueGasUsed / (10 ** 9))
 
+        const minerReward = filterRogue ? nonRogueReward : (block.miner_reward / (10 ** 18)).toFixed(4)
+
         return (
             <tr key={i}>
                 <td>
@@ -34,15 +38,14 @@ export default function Table({ data }) {
                         {block.block_number}
                     </a>
                 </td>
-                <td>Ξ {(block.miner_reward / (10 ** 18)).toFixed(4)}</td>
+                <td>Ξ {minerReward}</td>
                 <td>{block.gas_used}</td>
                 <td>{Math.round(block.miner_reward / block.gas_used / (10 ** 9))}
                     <span> gwei</span>
                 </td>
                 <td className={hasMegaBundle ? 'hasMegaBundle' : ''}>{hasMegaBundle ? '✓' : 'x'}</td>
                 <td>{block.transactions.length}</td>
-                {/* <td>{numNonRougeBundles}</td>
-                <td>{(nonRogueReward / (10 ** 18)).toFixed(4)}</td> */}
+
             </tr>
         )
     })
