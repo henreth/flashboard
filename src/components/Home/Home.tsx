@@ -151,7 +151,6 @@ export default function Home({ testData }) {
       <div className='home-title'>⚡️🤖 Latest 100 Blocks</div>
       <div className='subtitle'>all data provided by the <a href='https://blocks.flashbots.net/'>flashbots mev-blocks api</a></div>
       <div className='options'>
-        {/* tabs to select Table or table with information */}
         <div className='tab-container'>
           <div className='view-title'>View:</div>
           <div className={tableViewClass} onClick={viewTable}>Table</div> //
