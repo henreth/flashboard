@@ -205,4 +205,16 @@
   -webkit-transition: 0s;
   transition: 0s;
 }
+
+.filter-title {
+  margin: 0% 0.75% 0% 0%;
+  color: #bebebe;
+  font-weight: bolder;
+  font-size: 100%;
+  cursor: default;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
 /*# sourceMappingURL=Home.css.map */

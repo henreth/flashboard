@@ -17,6 +17,15 @@ export default function Home({ testData }) {
   let graphViewClass = viewOption === 'graph' ? 'tab selected' : 'tab'
   let tableViewClass = viewOption === 'table' ? 'tab selected' : 'tab'
 
+  // filter rogue bundles:
+  let [filterRogue, setFilterRogue] = useState(false)
+
+  const filterYes = () => setFilterRogue(true)
+  const filterNo = () => setFilterRogue(false)
+
+  let filterYesClass = filterRogue ? 'tab selected' : 'tab'
+  let filterNoClass = filterRogue ? 'tab' : 'tab selected'
+
   //used in table:
   let [pageNum, setPageNum] = useState(1)
   let right = pageNum * 15
@@ -40,9 +49,37 @@ export default function Home({ testData }) {
   let graphData = testData.slice(leftBound, rightBound)
 
   let labels = graphData.map(block => block.block_number)
-  let blockrewards = graphData.map(block => (block.miner_reward / (10 ** 18)).toFixed(4))
-  let gasfees = graphData.map(block => block.miner_reward / block.gas_used / (10 ** 9))
-  let numBundles = graphData.map(block => block.transactions.length)
+
+  let nonRogueBlockrewards = graphData.map(block => {
+    let nonRogueReward = block.transactions.reduce((tot, tx) => {
+      if (tx.bundle_type !== 'rogue') return tot + parseInt(tx.total_miner_reward)
+      return tot
+    }, 0)
+
+    return (nonRogueReward / (10 ** 18)).toFixed(4)
+  })
+  let nonRogueGasfees = graphData.map(block => {
+    let nonRogueReward = block.transactions.reduce((tot, tx) => {
+      if (tx.bundle_type !== 'rogue') return tot + parseInt(tx.total_miner_reward)
+      return tot
+    }, 0)
+
+    let nonRogueGasUsed = block.transactions.reduce((tot, tx) => {
+      if (tx.bundle_type !== 'rogue') return tot + parseInt(tx.gas_used)
+      return tot
+    }, 0)
+
+    return Math.round(nonRogueReward / nonRogueGasUsed / (10 ** 9))
+  })
+  let nonRogueNumBundles = graphData.map(block => block.transactions.filter(tx => tx.bundle_type !== 'rogue').length)
+
+  let inclusiveBlockrewards = graphData.map(block => (block.miner_reward / (10 ** 18)).toFixed(4))
+  let inclusiveGasfees = graphData.map(block => block.miner_reward / block.gas_used / (10 ** 9))
+  let inclusiveNumBundles = graphData.map(block => block.transactions.length)
+
+  let blockrewards = filterRogue ? nonRogueBlockrewards : inclusiveBlockrewards
+  let gasfees = filterRogue ? nonRogueGasfees : inclusiveGasfees
+  let numBundles = filterRogue ? nonRogueNumBundles : inclusiveNumBundles
 
   const options = {
     responsive: true,
@@ -74,13 +111,7 @@ export default function Home({ testData }) {
   };
   //
 
-  let graphElement = testData ? <Graph options={options} data={data} /> : null
-  let tableElement = testData ? <Table data={blockData} pageNum={pageNum} setPageNum={setPageNum} left={left} right={right} /> : null
-
-  function onSliderChange(value) {
-    setLeftBound(Math.min(...value))
-    setRightBound(Math.max(...value))
-  }
+  let tableElement = testData ? <Table data={blockData} pageNum={pageNum} setPageNum={setPageNum} left={left} right={right} filterRogue={filterRogue} /> : null
 
   const displayTable = viewOption === 'table' ? <React.Fragment>
     {tableElement}
@@ -94,17 +125,25 @@ export default function Home({ testData }) {
   </React.Fragment>
     : null
 
+
+  let graphElement = testData ? <Graph options={options} data={data} /> : null
+
+  function onSliderChange(value) {
+    setLeftBound(Math.min(...value))
+    setRightBound(Math.max(...value))
+  }
+
   const displayGraph = viewOption === 'graph' ? <React.Fragment>
-      <div className="graph-container">
-        {graphElement}
-      </div>
-      <div className='slider-container'>
-        <div>Range: {leftBound + 1}:{rightBound}</div>
-        <Slider range dots pushable allowCross={false} step={5} defaultValue={[0, 15]} onChange={onSliderChange}
-          trackStyle={[{ backgroundColor: '#1a8870' }]}
-          handleStyle={[{ backgroundColor: '#92e0d0' }, { backgroundColor: '#92e0d0' }]}
-        />
-      </div>
+    <div className="graph-container">
+      {graphElement}
+    </div>
+    <div className='slider-container'>
+      <div>Range: {leftBound + 1}:{rightBound}</div>
+      <Slider range dots pushable allowCross={false} step={5} defaultValue={[0, 15]} onChange={onSliderChange}
+        trackStyle={[{ backgroundColor: '#1a8870' }]}
+        handleStyle={[{ backgroundColor: '#92e0d0' }, { backgroundColor: '#92e0d0' }]}
+      />
+    </div>
   </React.Fragment> : null
 
   return (
@@ -118,10 +157,15 @@ export default function Home({ testData }) {
           <div className={tableViewClass} onClick={viewTable}>Table</div>
           <div className={graphViewClass} onClick={viewGraph}>Graph</div>
         </div>
+        <div className='tab-container'>
+          <div className='filter-title'>Filter Rogue Bundles: </div>
+          <div className={filterYesClass} onClick={filterYes}>On</div>
+          <div className={filterNoClass} onClick={filterNo}>Off</div>
+        </div>
       </div>
 
       {displayTable}
-      {displayGraph }
+      {displayGraph}
 
 
       <div className='footer'>
