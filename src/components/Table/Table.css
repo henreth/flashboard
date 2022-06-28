@@ -17,11 +17,11 @@
 }
 
 .hasMegaBundle {
-  color: green !important;
+  color: #3883d9 !important;
 }
 
 .noMegaBundle {
-  color: red !important;
+  color: #b2aeae !important;
 }
 
 .table-wrapper {

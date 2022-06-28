@@ -47,7 +47,7 @@ export default function Table({ data,filterRogue }) {
 
         //
         const displayMegaBundle = hasMegaBundle ? '✓' : 'x'
-        const megaBundleClass = hasMegaBundle ? 'hasMegaBundle' : ''
+        const megaBundleClass = hasMegaBundle ? 'hasMegaBundle' : 'noMegaBundle'
 
         return (
             <tr key={i}>
