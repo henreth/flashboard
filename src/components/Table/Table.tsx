@@ -7,28 +7,17 @@ export default function Table({ data,filterRogue }) {
     let dataToDisplay = data.map((block, i) => {
         let nonRogueBundles = block.transactions.filter(tx=>tx.bundle_type!=='rogue')
 
-        let NonRougeNumBundles = block.transactions.reduce((tot, tx) => {
-            if (tx.bundle_type !== 'rogue') {
-                return tot + 1
-            }
-            return tot
-        }, 0)
+        let NonRougeNumBundles = block.transactions.reduce((tot, tx) => (tx.bundle_type !== 'rogue' ? tot + 1 : tot),0)
 
-        let nonRogueReward = block.transactions.reduce((tot,tx) => {
-            if (tx.bundle_type !== 'rogue')return tot + parseInt(tx.total_miner_reward)
-            return tot
-        },0)
+        let nonRogueReward = block.transactions.reduce((tot,tx) => (tx.bundle_type !== 'rogue' ? tot + parseInt(tx.total_miner_reward): tot),0)
 
         let nonRougeMinerReward = (nonRogueReward / (10 ** 18)).toFixed(4)
 
-        let nonRogueGasUsed = block.transactions.reduce((tot,tx) => {
-            if (tx.bundle_type !== 'rogue')return tot + parseInt(tx.gas_used)
-            return tot
-        },0)
+        let nonRogueGasUsed = block.transactions.reduce((tot,tx) => (tx.bundle_type !== 'rogue' ?  tot + parseInt(tx.gas_used) : tot),0)
 
         let nonRogueGasPrice = Math.round(nonRogueReward / nonRogueGasUsed / (10 ** 9))
 
-        const nonRogueHasMegaBundle = block.transactions.filter(tx=>tx.bundle_type!=='rogue').some(tx => { return tx.is_megabundle })
+        const nonRogueHasMegaBundle = block.transactions.filter(tx=>tx.bundle_type!=='rogue').some(tx => tx.is_megabundle)
 
 
         //all (including rogue)
@@ -70,7 +59,6 @@ export default function Table({ data,filterRogue }) {
     })
     return (
         <React.Fragment>
-
             <div className='table-wrapper'>
                 <table className='fl-table'>
                     <thead className='table-header'>
