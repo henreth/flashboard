@@ -45,7 +45,7 @@ export default function Home({ testData }) {
 
   //used in graph:
   let [leftBound, setLeftBound] = useState(0)
-  let [rightBound, setRightBound] = useState(10)
+  let [rightBound, setRightBound] = useState(15)
   let graphData = testData.slice(leftBound, rightBound)
 
   let labels = graphData.map(block => block.block_number)

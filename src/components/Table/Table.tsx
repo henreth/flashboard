@@ -70,7 +70,6 @@ export default function Table({ data,filterRogue }) {
     })
     return (
         <React.Fragment>
-
             <div className='table-wrapper'>
                 <table className='fl-table'>
                     <thead className='table-header'>
