@@ -1,8 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import Home from '../Home/Home.tsx';
-import './App.css';
-
 
 let blocksUrl = 'https://blocks.epheph.com/v1/blocks'
 let flashUrl = 'https://blocks.flashbots.net/v1/blocks' 

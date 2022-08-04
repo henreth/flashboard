@@ -3,7 +3,6 @@ import Graph from '../Graph/Graph.tsx';
 // @ts-ignore
 import Table from '../Table/Table.tsx';
 import React, { useState } from 'react'
-import './Home.css';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 
