@@ -15,7 +15,7 @@ A web application that utilizes the Flashbots mev-blocks api to visualize block 
 
 # Demos:
 
-<img src="flashboard-demo.gif" width="700">
+<img src="demo.gif" width="700">
 
 #
 ## Technicals:
