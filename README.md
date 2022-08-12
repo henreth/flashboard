@@ -35,6 +35,6 @@ A web application that utilizes the Flashbots mev-blocks api to visualize block 
 
 ```
 // install and start the frontend interface
-npm install --prefix client
-npm start --prefix client 
+npm install 
+npm start
 ```
